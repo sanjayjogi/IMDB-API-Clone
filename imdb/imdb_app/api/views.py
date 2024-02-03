@@ -12,6 +12,8 @@ from imdb_app.api.permissions import IsAdminOrReadOnly, IsReviewUserOrReadOnly
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle, ScopedRateThrottle
 from imdb_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+from imdb_app.api.pagination import WatchListPagination, WatchListLOPaginaton, WatchListCPagination
 
 
 class UserReview(generics.ListAPIView):
@@ -172,6 +174,14 @@ class StreamPlatformDetail(APIView):
             movie = StreamPlatform.objects.get(pk=pk)
             movie.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class WatchListGV(generics.ListAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = WatchListSerializer
+    # filter_backends = [filters.OrderingFilter]
+    # ordering_fields = ['avg_rating']
+    pagination_class = WatchListCPagination
 
 
 class WatchListAV(APIView):

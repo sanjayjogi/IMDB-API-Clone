@@ -1,6 +1,6 @@
 from django.urls import path, include
 # from imdb_app.api.views import movie_list, movie_detail
-from imdb_app.api.views import UserReview, StreamPlatformVS, ReviewCreate, WatchListAV, WatchDetailAV, StreamPlatformAV, StreamPlatformDetail, ReviewList, ReviewDetail
+from imdb_app.api.views import WatchListGV, UserReview, StreamPlatformVS, ReviewCreate, WatchListAV, WatchDetailAV, StreamPlatformAV, StreamPlatformDetail, ReviewList, ReviewDetail
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -8,13 +8,14 @@ router.register('platform', StreamPlatformVS, basename='streamplatform')
 
 urlpatterns = [
     path('list/', WatchListAV.as_view(), name='movie-list'),
+    path('list2/', WatchListGV.as_view(), name='movie-list2'),
     path('<int:pk>/', WatchDetailAV.as_view(), name='movie-detail'),
 
     path('', include(router.urls)),
 
-    #     path('platform/', StreamPlatformA V.as_view(), name='platform-list'),
-    #     path('platform/<int:pk>/', StreamPlatformDetail.as_view(),
-    #          name='platform-detail'),
+    path('platform/', StreamPlatformAV.as_view(), name='platform-list'),
+    path('platform/<int:pk>/', StreamPlatformDetail.as_view(),
+         name='platform-detail'),
 
     #     path('review/', ReviewList.as_view(), name='review-list'),
     #     path('review/<int:pk>/', ReviewDetail.as_view(),
